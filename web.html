@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Blue's cheats and piracy!</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #030a14;
+    --card: #061220;
+    --border: #0d2540;
+    --text: #cce8ff;
+    --muted: #3a6a8a;
+    --royal: #1a4fd6;
+    --royal-light: #4a80ff;
+    --teal: #00c9b1;
+    --cyan: #00e5ff;
+    --gold: #f0b429;
+    --gold-dim: #7a5a10;
+  }
+
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Space Grotesk', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 16px;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 5%,  #0a2a6e33 0%, transparent 55%),
+      radial-gradient(ellipse 60% 40% at 85% 95%, #00304033 0%, transparent 55%),
+      radial-gradient(ellipse 50% 50% at 50% 50%, #001828 0%, transparent 80%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .section {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    animation: fadeIn 0.22s ease;
+  }
+
+  .section.active { display: flex; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Title */
+  .page-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 24px;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--text);
+  }
+
+  .page-title .grad {
+    background: linear-gradient(135deg, var(--cyan) 0%, var(--royal-light) 50%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .btn-list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 8px;
+  }
+
+  /* ── BASE ── */
+  .btn {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    width: 100%;
+    padding: 13px 16px;
+    border-radius: 11px;
+    color: var(--text);
+    text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.93rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.18s, border-color 0.18s, transform 0.15s, box-shadow 0.18s;
+    text-align: left;
+    position: relative;
+  }
+
+  .btn .icon { font-size: 1rem; width: 22px; text-align: center; flex-shrink: 0; }
+  .btn .label { flex: 1; }
+
+  .btn .arrow {
+    font-size: 0.82rem;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.15s, transform 0.15s;
+  }
+
+  .btn:hover .arrow { opacity: 1; transform: translateX(0); }
+  .btn:active { transform: translateY(0) !important; }
+
+  /* ── LINK (website) — teal/cyan accent ── */
+  .btn.link {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--teal);
+  }
+
+  .btn.link:hover {
+    background: #071d30;
+    border-color: var(--teal);
+    border-left-color: var(--cyan);
+    box-shadow: 0 4px 20px rgba(0,200,180,0.1), inset 0 0 20px rgba(0,200,180,0.03);
+    transform: translateY(-1px);
+  }
+
+  .btn.link .arrow { color: var(--teal); }
+
+  /* ── CATEGORY (navigates) — gold accent, visually distinct ── */
+  .btn.category {
+    background: linear-gradient(135deg, #0c1e35 0%, #081525 100%);
+    border: 1px solid #1a3a20;
+    border-left: 3px solid var(--gold);
+    font-weight: 600;
+  }
+
+  .btn.category:hover {
+    background: linear-gradient(135deg, #112840 0%, #0a1e30 100%);
+    border-color: var(--gold);
+    border-left-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(240,180,41,0.12), inset 0 0 20px rgba(240,180,41,0.03);
+    transform: translateY(-1px);
+  }
+
+  .btn.category .arrow { color: var(--gold); font-size: 1rem; opacity: 0.6; }
+  .btn.category:hover .arrow { opacity: 1; }
+
+  /* Gold badge on categories */
+  .badge {
+    font-size: 0.58rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--gold-dim);
+    background: rgba(240,180,41,0.07);
+    border: 1px solid rgba(240,180,41,0.18);
+    border-radius: 4px;
+    padding: 2px 5px;
+    flex-shrink: 0;
+    transition: color 0.15s, border-color 0.15s;
+  }
+
+  .btn.category:hover .badge {
+    color: var(--gold);
+    border-color: rgba(240,180,41,0.45);
+  }
+
+  /* ── BACK ── */
+  .btn.back {
+    background: transparent;
+    border: 1px dashed #0d2035;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-top: 2px;
+    border-radius: 9px;
+  }
+
+  .btn.back:hover {
+    color: var(--royal-light);
+    border-color: var(--royal);
+    background: #040e1a;
+    transform: translateY(-1px);
+  }
+
+  .btn.back .arrow { color: var(--royal-light); }
+
+  /* Divider */
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #0d2540, transparent);
+    margin: 4px 0;
+  }
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+  <!-- MAIN -->
+  <div class="section active" id="main">
+    <div class="page-title">Blue's <span class="grad">cheats</span> and <span class="grad">piracy!</span></div>
+    <div class="btn-list">
+      <button class="btn category" onclick="show('piracy')">
+        <span class="icon">🏴‍☠️</span><span class="label">Piracy</span><span class="badge">CATEGORY</span><span class="arrow">›</span>
+      </button>
+      <button class="btn category" onclick="show('cheats')">
+        <span class="icon">🎮</span><span class="label">Cheats</span><span class="badge">CATEGORY</span><span class="arrow">›</span>
+      </button>
+      <button class="btn category" onclick="show('other')">
+        <span class="icon">🔗</span><span class="label">Other</span><span class="badge">CATEGORY</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- CHEATS -->
+  <div class="section" id="cheats">
+    <div class="page-title"><span class="grad">Cheats</span></div>
+    <div class="btn-list">
+      <button class="btn category" onclick="show('blooket')">
+        <span class="icon">📁</span><span class="label">Blooket</span><span class="badge">CATEGORY</span><span class="arrow">›</span>
+      </button>
+      <button class="btn category" onclick="show('prodigy')">
+        <span class="icon">📁</span><span class="label">Prodigy</span><span class="badge">CATEGORY</span><span class="arrow">›</span>
+      </button>
+      <div class="divider"></div>
+      <button class="btn back" onclick="show('main')">
+        <span class="icon">←</span><span class="label">GO BACK</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- BLOOKET -->
+  <div class="section" id="blooket">
+    <div class="page-title"><span class="grad">Blooket</span></div>
+    <div class="btn-list">
+      <a class="btn link" href="https://gitlab.com/blooket/blooket-cheats" target="_blank">
+        <span class="icon">🦊</span><span class="label">GitLab Hack</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://www.youtube.com/watch?v=Mmly4Z8rNNQ" target="_blank">
+        <span class="icon">▶️</span><span class="label">Tutorial</span><span class="arrow">↗</span>
+      </a>
+      <div class="divider"></div>
+      <button class="btn back" onclick="show('cheats')">
+        <span class="icon">←</span><span class="label">GO BACK</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- PRODIGY -->
+  <div class="section" id="prodigy">
+    <div class="page-title"><span class="grad">Prodigy</span></div>
+    <div class="btn-list">
+      <a class="btn link" href="https://github.com/rxzyx/prodigy-hack" target="_blank">
+        <span class="icon">🐙</span><span class="label">GitHub Hack</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://www.youtube.com/watch?v=Rw8v2Y-dmfQ" target="_blank">
+        <span class="icon">▶️</span><span class="label">Tutorial</span><span class="arrow">↗</span>
+      </a>
+      <div class="divider"></div>
+      <button class="btn back" onclick="show('cheats')">
+        <span class="icon">←</span><span class="label">GO BACK</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- PIRACY -->
+  <div class="section" id="piracy">
+    <div class="page-title"><span class="grad">Piracy</span></div>
+    <div class="btn-list">
+      <button class="btn category" onclick="show('games')">
+        <span class="icon">🎮</span><span class="label">Games</span><span class="badge">CATEGORY</span><span class="arrow">›</span>
+      </button>
+      <button class="btn category" onclick="show('tv')">
+        <span class="icon">📺</span><span class="label">TV / Movies</span><span class="badge">CATEGORY</span><span class="arrow">›</span>
+      </button>
+      <a class="btn link" href="https://kemono.party/" target="_blank">
+        <span class="icon">ℹ️</span><span class="label">Kemono (Archiver)</span><span class="arrow">↗</span>
+      </a>
+      <div class="divider"></div>
+      <button class="btn back" onclick="show('main')">
+        <span class="icon">←</span><span class="label">GO BACK</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- GAMES -->
+  <div class="section" id="games">
+    <div class="page-title"><span class="grad">Game Piracy</span></div>
+    <div class="btn-list">
+      <a class="btn link" href="https://steamunlocked.net/" target="_blank">
+        <span class="icon">🔒</span><span class="label">SteamUnlocked</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://online-fix.me/games/" target="_blank">
+        <span class="icon">🎓</span><span class="label">Online-fix</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://1337x.to/" target="_blank">
+        <span class="icon">🌐</span><span class="label">1337x</span><span class="badge" style="color:#00e5ff;background:rgba(0,229,255,0.07);border-color:rgba(0,229,255,0.3)">BEST PICK</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://steamrip.com/" target="_blank">
+        <span class="icon">👻</span><span class="label">SteamRIP</span><span class="arrow">↗</span>
+      </a>
+      <div class="divider"></div>
+      <button class="btn back" onclick="show('piracy')">
+        <span class="icon">←</span><span class="label">GO BACK</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- TV -->
+  <div class="section" id="tv">
+    <div class="page-title"><span class="grad">TV / Movies</span></div>
+    <div class="btn-list">
+      <a class="btn link" href="https://rivestream.org/" target="_blank">
+        <span class="icon">▶️</span><span class="label">Rive</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://xprime.tv/" target="_blank">
+        <span class="icon">✖️</span><span class="label">XPrime</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://uira.live/" target="_blank">
+        <span class="icon">⬛</span><span class="label">uira.live</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://www.cineby.app/" target="_blank">
+        <span class="icon">🎬</span><span class="label">Cineby</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://www.bitcine.app/" target="_blank">
+        <span class="icon">🎥</span><span class="label">Bitcine</span><span class="arrow">↗</span>
+      </a>
+      <button class="btn category" onclick="show('anime')">
+        <span class="icon">⛵</span><span class="label">Anime</span><span class="badge">CATEGORY</span><span class="arrow">›</span>
+      </button>
+      <div class="divider"></div>
+      <button class="btn back" onclick="show('piracy')">
+        <span class="icon">←</span><span class="label">GO BACK</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ANIME -->
+  <div class="section" id="anime">
+    <div class="page-title"><span class="grad">Anime</span></div>
+    <div class="btn-list">
+      <a class="btn link" href="https://www.miruro.tv/" target="_blank">
+        <span class="icon">💠</span><span class="label">Miruro</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://allmanga.to/" target="_blank">
+        <span class="icon">📖</span><span class="label">AllManga</span><span class="arrow">↗</span>
+      </a>
+      <div class="divider"></div>
+      <button class="btn back" onclick="show('tv')">
+        <span class="icon">←</span><span class="label">GO BACK</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- OTHER -->
+  <div class="section" id="other">
+    <div class="page-title"><span class="grad">Other</span></div>
+    <div class="btn-list">
+      <a class="btn link" href="https://fmhy.net/" target="_blank">
+        <span class="icon">📚</span><span class="label">FMHY</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://whatwhatboy.com/" target="_blank">
+        <span class="icon">📁</span><span class="label">WhatWhatBoy</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://www.cheatengine.org/" target="_blank">
+        <span class="icon">⚙️</span><span class="label">Cheat Engine</span><span class="arrow">↗</span>
+      </a>
+      <a class="btn link" href="https://zAccounts.io" target="_blank">
+        <span class="icon">🔑</span><span class="label">zAccounts</span><span class="arrow">↗</span>
+      </a>
+      <div class="divider"></div>
+      <button class="btn back" onclick="show('main')">
+        <span class="icon">←</span><span class="label">GO BACK</span><span class="arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <footer style="text-align:center; margin-top: 32px; padding-bottom: 8px;">
+    <p style="font-size: 0.72rem; color: #2a5a7a; font-family: Space Grotesk, sans-serif; letter-spacing: 0.08em;">© 2026 Blue Inc. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+  function show(id) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
